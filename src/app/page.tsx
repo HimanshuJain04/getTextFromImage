@@ -3,6 +3,7 @@
 import { FaImage } from "react-icons/fa6";
 import React, { useRef, useState } from "react";
 import convertToText from "@/lib/convertor";
+import Link from "next/link";
 
 export default function Home() {
   const inputRef: any = useRef(null);
@@ -28,11 +29,25 @@ export default function Home() {
     }
   };
 
+  function copyToClipboard(text: string) {
+    navigator.clipboard.writeText(text);
+  }
+
   return (
     <div className="flex justify-center my-20 min-h-screen items-center w-full">
-      <div className="flex flex-col mt-10 gap-10 justify-start items-center w-11/12">
+      <div className="flex flex-col gap-10 justify-start items-center w-11/12">
         {/* heading */}
-        <div>
+        <div className="flex flex-col gap-3 justify-center items-center">
+          <p className="text-[white]/[0.7]">
+            This is a clone.Original One is{" "}
+            <Link
+              href="https://get-text.devverse.io/"
+              className="text-orange-300 underline"
+            >
+              here
+            </Link>
+          </p>
+
           <p className="text-6xl text-white font-extrabold ">
             Build With{" "}
             <span className="bg-gradient-to-r from-blue-500 via-green-500 bg-clip-text text-transparent to-indigo-400">
@@ -42,7 +57,20 @@ export default function Home() {
         </div>
 
         {/* image section */}
-        <div onClick={selectImage} className="w-full">
+        <div
+          onDrop={(e: any) => {
+            e.preventDefault();
+            if (e.dataTransfer.files) {
+              const url: string = URL.createObjectURL(e.dataTransfer.files[0]);
+              convertor(url);
+            }
+          }}
+          onDragOver={(e) => {
+            e.preventDefault();
+          }}
+          onClick={selectImage}
+          className="w-full"
+        >
           <div className="bg-[white]/[0.15] cursor-pointer rounded-2xl w-full gap-5 h-[400px] flex-col flex justify-center items-center">
             <p className="text-3xl text-[white]/[0.3] font-bold">
               {loading ? "Processing...." : "Browse or Drop Your Image Here "}
@@ -78,7 +106,10 @@ export default function Home() {
                   <span>({index + 1}) </span>
                   {new Date().toUTCString()}
                 </p>
-                <button className="bg-white px-7 hover:bg-[white]/[0.8] transition-all duration-300 ease-in-out py-3 text-black font-semibold rounded-xl">
+                <button
+                  onClick={copyToClipboard(data)}
+                  className="bg-white px-7 hover:bg-[white]/[0.8] transition-all duration-300 ease-in-out py-3 text-black font-semibold rounded-xl"
+                >
                   Copy
                 </button>
               </div>

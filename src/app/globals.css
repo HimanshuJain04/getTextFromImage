@@ -8,6 +8,6 @@ body {
   min-height: 100vh;
 }
 
-:-webkit-scrollbar {
+::-webkit-scrollbar {
   display: none;
 }
