@@ -1,11 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import React from "react";
 import { ImArrowUpRight2 } from "react-icons/im";
 
 function Header() {
   return (
-    <div className="flex justify-center static top-0 items-center">
-      <div className="w-11/12 flex mt-2 justify-between items-center py-3">
+    <div className="flex justify-center fixed top-0 backdrop-blur-lg w-full items-center">
+      <div className="w-11/12 border-b-[2px] border-[white]/[0.1] flex mt-1 justify-between items-center py-4">
         <div>
           <Link
             href="/"
